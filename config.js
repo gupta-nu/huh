@@ -28,7 +28,7 @@ const SITE_CONFIG = {
     "pls",
     "beda",
     "oh helll naaa",
-    "AHAHA I LAGUHED WHY WILL I U gUBE"
+    "AHAHA I LAGUHED WHY WILL I STUPIDD"
   ],
 
   backgrounds: {
