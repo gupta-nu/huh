@@ -22,12 +22,11 @@ const SITE_CONFIG = {
   // The button changes text as it slowly dodges the cursor.
   noSequence: [
     "no",
-    "chungus fool go da",
     "noooo",
     "pls",
     "beda",
     "oh helll naaa",
-    "AHAHA I LAGUHED WHY WILL I STUPIDD"
+    "chungus fool go da"
   ],
 
   backgrounds: {
