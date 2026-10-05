@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v12");
+  console.info("date-site build: v13");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -84,6 +84,36 @@
   let hoverStopTimer = null;
   let introAutoplaySucceeded = false;
 
+  const HOA_SCREENS = new Set(["intro", "ask", "retry", "celebrate", "dates"]);
+
+  function pauseHoaForForeground() {
+    const hoa = audioBank.intro;
+    if (!hoa) return;
+    try { hoa.pause(); } catch (_) {}
+  }
+
+  function resumeHoaIfAllowed() {
+    if (!HOA_SCREENS.has(currentScreen)) return;
+    if (activeHoverAudio || activeClickAudio) return;
+
+    const hoa = audioBank.intro;
+    if (!hoa) return;
+
+    try {
+      hoa.loop = true;
+      hoa.volume = 0.78;
+      ambientAudio = hoa;
+      if (!hoa.paused) return;
+
+      const promise = hoa.play();
+      promise?.catch?.((error) => {
+        console.warn("[audio] could not resume hoa hoa", error);
+      });
+    } catch (error) {
+      console.warn("[audio] failed to resume hoa hoa", error);
+    }
+  }
+
   Object.values(audioBank).forEach((audio) => {
     if (!audio) return;
     audio.preload = "auto";
@@ -99,25 +129,33 @@
     } catch (_) {}
   }
 
-  function stopActiveAudio() {
-    if (!activeClickAudio) return;
-    stopAudioElement(activeClickAudio);
-    activeClickAudio = null;
+  function stopActiveAudio({ resumeAmbient = true } = {}) {
+    if (activeClickAudio) {
+      const audio = activeClickAudio;
+      activeClickAudio = null;
+      audio.onended = null;
+      stopAudioElement(audio);
+    }
+    if (resumeAmbient) resumeHoaIfAllowed();
   }
 
-  function stopHoverSound() {
+  function stopHoverSound({ resumeAmbient = true } = {}) {
     clearTimeout(hoverStopTimer);
     hoverStopTimer = null;
-    if (!activeHoverAudio) return;
-    stopAudioElement(activeHoverAudio);
-    activeHoverAudio = null;
+    if (activeHoverAudio) {
+      const audio = activeHoverAudio;
+      activeHoverAudio = null;
+      stopAudioElement(audio);
+    }
+    if (resumeAmbient) resumeHoaIfAllowed();
   }
 
   function playHoverSound(key, volume = 0.82, { autoStopMs = 0 } = {}) {
     const audio = audioBank[key];
     if (!audio) return;
 
-    stopHoverSound();
+    stopHoverSound({ resumeAmbient: false });
+    pauseHoaForForeground();
 
     try {
       audio.pause();
@@ -149,8 +187,9 @@
       return;
     }
 
-    stopHoverSound();
-    stopActiveAudio();
+    stopHoverSound({ resumeAmbient: false });
+    stopActiveAudio({ resumeAmbient: false });
+    pauseHoaForForeground();
 
     try {
       audio.pause();
@@ -158,11 +197,18 @@
       audio.loop = false;
       audio.volume = volume;
       activeClickAudio = audio;
+      audio.onended = () => {
+        if (activeClickAudio === audio) activeClickAudio = null;
+        audio.onended = null;
+        resumeHoaIfAllowed();
+      };
 
       const promise = audio.play();
       promise?.catch?.((error) => {
         console.warn("[audio] could not play " + key, error);
         if (activeClickAudio === audio) activeClickAudio = null;
+        audio.onended = null;
+        resumeHoaIfAllowed();
       });
     } catch (error) {
       console.warn("[audio] failed to start " + key, error);
@@ -204,7 +250,8 @@
   }
 
   function startIntroLoop() {
-    if (!["intro", "ask", "retry", "celebrate", "dates"].includes(currentScreen)) return;
+    if (!HOA_SCREENS.has(currentScreen)) return;
+    if (activeHoverAudio || activeClickAudio) return;
     const audio = audioBank.intro;
     if (!audio) return;
 
@@ -320,8 +367,7 @@
 
     currentScreen = name;
     document.body.dataset.screen = name;
-    const hoaScreens = new Set(["intro", "ask", "retry", "celebrate", "dates"]);
-    if (hoaScreens.has(name)) {
+    if (HOA_SCREENS.has(name)) {
       startIntroLoop();
     } else {
       stopIntroLoop();
