@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v10");
+  console.info("date-site build: v11");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -206,7 +206,7 @@
   }
 
   function startIntroLoop() {
-    if (!["intro", "ask", "retry", "celebrate"].includes(currentScreen)) return;
+    if (!["intro", "ask", "retry", "celebrate", "dates"].includes(currentScreen)) return;
     const audio = audioBank.intro;
     if (!audio) return;
 
@@ -323,13 +323,13 @@
 
     currentScreen = name;
     document.body.dataset.screen = name;
-    const hoaScreens = new Set(["intro", "ask", "retry", "celebrate"]);
+    const hoaScreens = new Set(["intro", "ask", "retry", "celebrate", "dates"]);
     if (hoaScreens.has(name)) {
       startIntroLoop();
     } else {
       stopIntroLoop();
     }
-    if (name !== "dates") stopSoparLoop();
+    stopSoparLoop();
     stopHoverSound();
     syncIntroVideo(name);
     renderMemes(name);
@@ -548,10 +548,10 @@
   });
 
   toDatesBtn.addEventListener("click", () => {
-    stopActiveAudio();
     stopHoverSound();
+    playSound("sopar", 0.95); // one-shot transition sound
     showScreen("dates");
-    startSoparLoop();
+    startIntroLoop(); // hoa hoa is the date-picker background loop
     renderDateCard();
   });
 
