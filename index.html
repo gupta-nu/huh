@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
   <video id="introVideo" class="intro-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
@@ -23,6 +23,16 @@
   <audio id="noHoverAudio" src="assets/sounds/sad_hamster_meme_theme.mp3" preload="auto"></audio>
   <audio id="yesAudio" src="assets/sounds/yes.mp3" preload="auto"></audio>
   <div id="backgroundMedia" class="background-media" aria-hidden="true"></div>
+  <iframe
+    id="datesOceanBg"
+    class="dates-ocean-bg"
+    src="https://tenor.com/embed/16228802"
+    title=""
+    aria-hidden="true"
+    tabindex="-1"
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
   <div class="background-wash" aria-hidden="true"></div>
   <div id="memeLayer" class="meme-layer" aria-hidden="true"></div>
   <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
@@ -71,28 +81,16 @@
       </div>
     </section>
 
-    <!-- DATE PICKER -->
+    <!-- DATE PICKER: ALL CARDS VISIBLE -->
     <section id="screenDates" class="screen screen--scroll" data-screen="dates">
       <div class="date-page">
         <header class="date-header">
           <div class="eyebrow">your reward for saying yes</div>
           <h1 class="date-heading">pick our date ♡</h1>
-          <p class="soft-copy">flip the cards. inspect the evidence. choose whichever makes you happiest.</p>
+          <p class="soft-copy">all your options. flip any card and pick your winner.</p>
         </header>
 
-        <div class="deck-wrap">
-          <button id="prevCardBtn" class="deck-arrow" type="button" aria-label="Previous date">←</button>
-
-          <div class="deck-stage">
-            <div id="dateCounter" class="date-counter">1 / 9</div>
-            <div id="dateCardMount" class="date-card-mount"></div>
-            <p class="flip-hint">tap the card to flip it</p>
-          </div>
-
-          <button id="nextCardBtn" class="deck-arrow" type="button" aria-label="Next date">→</button>
-        </div>
-
-        <div class="deck-dots" id="deckDots" aria-label="Date options"></div>
+        <div id="dateGrid" class="date-grid" aria-label="Date options"></div>
       </div>
     </section>
 
@@ -125,7 +123,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="config.js?v=13"></script>
-  <script src="script.js?v=13"></script>
+  <script src="config.js?v=14"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>
