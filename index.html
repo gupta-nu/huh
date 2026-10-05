@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="styles.css?v=17" />
 </head>
 <body>
   <video id="introVideo" class="intro-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
@@ -96,24 +96,38 @@
     <!-- FINAL -->
     <section id="screenFinal" class="screen screen--scroll" data-screen="final">
       <div class="final-page">
-        <div class="glass-panel final-panel">
-          <div class="eyebrow">locked in ♡</div>
-          <h1 class="script-title">it's a date</h1>
-          <p class="soft-copy">you picked:</p>
+        <div class="final-content">
+          <h1 class="script-title">it's a date &lt;3</h1>
+          <p class="final-picked-label">you picked:</p>
           <div id="selectedDateTitle" class="selected-date-title"></div>
-          <p id="selectedDateBlurb" class="selected-date-blurb"></p>
 
           <div class="ticket" id="dateTicket">
-            <div class="ticket-topline">OFFICIAL DATE TICKET</div>
+            <div class="ticket-topline">DATE TICKET</div>
             <div class="ticket-heart">♡</div>
-            <div class="ticket-row"><span>DATE</span><strong id="ticketDate">TBD</strong></div>
-            <div class="ticket-row"><span>TIME</span><strong>her majesty decides</strong></div>
-            <div class="ticket-row"><span>ADMIT</span><strong>2 cuties</strong></div>
-            <div class="ticket-bottom">valid for one extremely cute date</div>
+
+            <div class="ticket-row">
+              <span>DATE</span>
+              <strong id="ticketDate">TBD</strong>
+            </div>
+
+            <div class="ticket-availability">
+              <label for="availabilityInput">DAY &amp; TIME</label>
+              <input
+                id="availabilityInput"
+                type="text"
+                autocomplete="off"
+                placeholder="pick a day + time you're available"
+                maxlength="160"
+              />
+            </div>
+
+            <div class="ticket-row">
+              <span>ADMIT FOR</span>
+              <strong>x2</strong>
+            </div>
           </div>
 
-          <p class="final-message">i'll sort the rest. you just tell me what time you wanna be there :)</p>
-          <button id="dealBtn" class="btn btn--yes btn--wide" type="button">deal 🤝</button>
+          <button id="dealBtn" class="btn btn--neutral btn--wide final-confirm-btn" type="button">confirm</button>
           <div id="dealMessage" class="deal-message" aria-live="polite"></div>
         </div>
       </div>
@@ -122,7 +136,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="config.js?v=16"></script>
-  <script src="script.js?v=16"></script>
+  <script src="config.js?v=17"></script>
+  <script src="script.js?v=17"></script>
 </body>
 </html>
