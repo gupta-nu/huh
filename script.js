@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v11");
+  console.info("date-site build: v12");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -66,9 +66,8 @@
   yesBtn.textContent = config.ask?.yesText || "yasssss";
 
   // ---------- AUDIO ----------
-  // Ambient loops:
-  // - hoa_hoa loops for the landing page
-  // - sopar loops while the date-picker page is open
+  // Ambient loop:
+  // - hoa_hoa is one persistent track from the landing page through the date picker
   // Hover reactions:
   // - YES audio plays while hovering YES
   // - NO audio plays when the cursor reaches/attempts the dodging NO button
@@ -76,8 +75,7 @@
     intro: document.getElementById("introAudio"),
     no: document.getElementById("noAudio"),
     noHover: document.getElementById("noHoverAudio"),
-    yes: document.getElementById("yesAudio"),
-    sopar: document.getElementById("soparAudio")
+    yes: document.getElementById("yesAudio")
   };
 
   let activeClickAudio = null;
@@ -215,6 +213,13 @@
       audio.volume = 0.78;
       ambientAudio = audio;
 
+      // Keep one uninterrupted HOA track. Do not call play() again on every screen
+      // transition if the same element is already playing.
+      if (!audio.paused) {
+        introAutoplaySucceeded = true;
+        return;
+      }
+
       const promise = audio.play();
       if (promise?.then) {
         promise
@@ -234,14 +239,6 @@
   function stopIntroLoop() {
     if (ambientAudio === audioBank.intro) ambientAudio = null;
     stopAudioElement(audioBank.intro);
-  }
-
-  function startSoparLoop() {
-    startAmbientLoop("sopar", 0.92);
-  }
-
-  function stopSoparLoop() {
-    stopAmbientLoop("sopar");
   }
 
   // Try audible autoplay immediately. If the browser blocks it, retry on the
@@ -329,7 +326,6 @@
     } else {
       stopIntroLoop();
     }
-    stopSoparLoop();
     stopHoverSound();
     syncIntroVideo(name);
     renderMemes(name);
@@ -367,8 +363,7 @@
 
   // ---------- PAGE 1 ----------
   supBtn.addEventListener("click", () => {
-    // Intro music is PAGE-1-only. Stop it cleanly before the question appears.
-    stopIntroLoop();
+    // Keep HOA uninterrupted as we move into the question.
     showScreen("ask");
   });
 
@@ -549,9 +544,7 @@
 
   toDatesBtn.addEventListener("click", () => {
     stopHoverSound();
-    playSound("sopar", 0.95); // one-shot transition sound
     showScreen("dates");
-    startIntroLoop(); // hoa hoa is the date-picker background loop
     renderDateCard();
   });
 
