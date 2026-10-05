@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111111" />
+  <title>one important question ♡</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=7" />
+</head>
+<body>
+  <video id="introVideo" class="intro-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="assets/video/cat-page-1.mp4" type="video/mp4" />
+  </video>
+
+  <audio id="introAudio" src="assets/sounds/hoa_hoa.mp3" preload="auto" autoplay loop></audio>
+  <audio id="noAudio" src="assets/sounds/no.mp3" preload="auto"></audio>
+  <audio id="yesAudio" src="assets/sounds/yes.mp3" preload="auto"></audio>
+  <audio id="soparAudio" src="assets/sounds/sopar.mp3" preload="auto"></audio>
+  <div id="backgroundMedia" class="background-media" aria-hidden="true"></div>
+  <div class="background-wash" aria-hidden="true"></div>
+  <div id="memeLayer" class="meme-layer" aria-hidden="true"></div>
+  <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+
+  <main id="app" class="app-shell">
+    <section id="screenIntro" class="screen screen--active hero-screen" data-screen="intro">
+      <div class="hero-content intro-content">
+        <h1 class="intro-title" id="introTitle">herro wife?</h1>
+        <p class="intro-inside-joke" id="introInsideJoke">“Hibachi, Benihana, Teriyaki”</p>
+        <p class="intro-subtitle" id="introSubtitle">can i ask u somethin</p>
+        <button id="supBtn" class="btn btn--neutral intro-button" type="button">sup?</button>
+      </div>
+    </section>
+
+    <section id="screenAsk" class="screen hero-screen" data-screen="ask">
+      <div class="hero-content question-content">
+        <h1 class="question-title" id="questionText">can i take you out on a date :&gt;</h1>
+        <div class="ask-buttons" id="askButtons">
+          <button id="yesBtn" class="btn btn--neutral" type="button">yasssss</button>
+          <button id="noBtn" class="btn btn--ghost btn--no" type="button">no</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenRetry" class="screen hero-screen" data-screen="retry">
+      <div class="hero-content retry-content">
+        <h1 class="retro-title">plis</h1>
+        <div class="buttons buttons--center">
+          <button id="retryBtn" class="btn btn--neutral" type="button">let me ask you again</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenCelebrate" class="screen hero-screen" data-screen="celebrate">
+      <div class="hero-content celebration-content">
+        <h1 class="celebrate-original-title">hell yeahhh babyyyy</h1>
+        <p class="celebrate-original-copy">god is good! good is great!!</p>
+        <div class="buttons buttons--center">
+          <button id="toDatesBtn" class="btn btn--neutral" type="button">sopar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenDates" class="screen screen--scroll" data-screen="dates">
+      <div class="date-page">
+        <header class="date-header">
+          <div class="eyebrow">your reward for saying yes</div>
+          <h1 class="date-heading">pick our date ♡</h1>
+          <p class="soft-copy">flip the cards. inspect the evidence. choose whichever makes you happiest.</p>
+        </header>
+
+        <div class="deck-wrap">
+          <button id="prevCardBtn" class="deck-arrow" type="button" aria-label="Previous date">←</button>
+          <div class="deck-stage">
+            <div id="dateCounter" class="date-counter">1 / 9</div>
+            <div id="dateCardMount" class="date-card-mount"></div>
+            <p class="flip-hint">tap the card to flip it</p>
+          </div>
+          <button id="nextCardBtn" class="deck-arrow" type="button" aria-label="Next date">→</button>
+        </div>
+        <div class="deck-dots" id="deckDots" aria-label="Date options"></div>
+      </div>
+    </section>
+
+    <section id="screenFinal" class="screen screen--scroll" data-screen="final">
+      <div class="final-page">
+        <div class="glass-panel final-panel">
+          <div class="eyebrow">locked in ♡</div>
+          <h1 class="script-title">it's a date</h1>
+          <p class="soft-copy">you picked:</p>
+          <div id="selectedDateTitle" class="selected-date-title"></div>
+          <p id="selectedDateBlurb" class="selected-date-blurb"></p>
+
+          <div class="ticket" id="dateTicket">
+            <div class="ticket-topline">OFFICIAL DATE TICKET</div>
+            <div class="ticket-heart">♡</div>
+            <div class="ticket-row"><span>DATE</span><strong id="ticketDate">TBD</strong></div>
+            <div class="ticket-row"><span>TIME</span><strong>her majesty decides</strong></div>
+            <div class="ticket-row"><span>ADMIT</span><strong>2 cuties</strong></div>
+            <div class="ticket-bottom">valid for one extremely cute date</div>
+          </div>
+
+          <p class="final-message">i'll sort the rest. you just tell me what time you wanna be there :)</p>
+          <button id="dealBtn" class="btn btn--yes btn--wide" type="button">deal 🤝</button>
+          <div id="dealMessage" class="deal-message" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js?v=7"></script>
+  <script src="script.js?v=7"></script>
+</body>
+</html>
