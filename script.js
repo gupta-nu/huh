@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v6");
+  console.info("date-site build: v8");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -66,8 +66,12 @@
   yesBtn.textContent = config.ask?.yesText || "yasssss";
 
   // ---------- AUDIO ----------
-  // Click sounds use explicit <audio> elements so they are reliably tied to a real user gesture.
-  // The intro track loops continuously while PAGE 1 is visible.
+  // Ambient loops:
+  // - hoa_hoa loops for the landing page
+  // - sopar loops while the date-picker page is open
+  // Hover reactions:
+  // - YES audio plays while hovering YES
+  // - NO audio plays when the cursor reaches/attempts the dodging NO button
   const audioBank = {
     intro: document.getElementById("introAudio"),
     no: document.getElementById("noAudio"),
@@ -76,6 +80,9 @@
   };
 
   let activeClickAudio = null;
+  let activeHoverAudio = null;
+  let ambientAudio = null;
+  let hoverStopTimer = null;
   let introAutoplaySucceeded = false;
 
   Object.values(audioBank).forEach((audio) => {
@@ -84,11 +91,12 @@
     try { audio.load(); } catch (_) {}
   });
 
-  function stopAudioElement(audio) {
+  function stopAudioElement(audio, { reset = true } = {}) {
     if (!audio) return;
     try {
       audio.pause();
-      audio.currentTime = 0;
+      if (reset) audio.currentTime = 0;
+      audio.loop = false;
     } catch (_) {}
   }
 
@@ -98,52 +106,122 @@
     activeClickAudio = null;
   }
 
+  function stopHoverSound() {
+    clearTimeout(hoverStopTimer);
+    hoverStopTimer = null;
+    if (!activeHoverAudio) return;
+    stopAudioElement(activeHoverAudio);
+    activeHoverAudio = null;
+  }
+
+  function playHoverSound(key, volume = 0.82, { autoStopMs = 0 } = {}) {
+    const audio = audioBank[key];
+    if (!audio) return;
+
+    stopHoverSound();
+
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.loop = autoStopMs <= 0;
+      audio.volume = volume;
+      activeHoverAudio = audio;
+
+      const promise = audio.play();
+      promise?.catch?.((error) => {
+        console.warn("[audio] hover " + key + " blocked/failed", error);
+        if (activeHoverAudio === audio) activeHoverAudio = null;
+      });
+
+      if (autoStopMs > 0) {
+        hoverStopTimer = setTimeout(() => {
+          if (activeHoverAudio === audio) stopHoverSound();
+        }, autoStopMs);
+      }
+    } catch (error) {
+      console.warn("[audio] hover " + key + " failed", error);
+    }
+  }
+
   function playSound(key, volume = 0.9) {
     const audio = audioBank[key];
     if (!audio) {
-      console.warn(`[audio] missing audio element for ${key}`);
+      console.warn("[audio] missing audio element for " + key);
       return;
     }
 
+    stopHoverSound();
     stopActiveAudio();
+
     try {
       audio.pause();
       audio.currentTime = 0;
       audio.loop = false;
       audio.volume = volume;
       activeClickAudio = audio;
+
       const promise = audio.play();
-      if (promise?.then) {
-        promise
-          .then(() => console.info(`[audio] playing ${key}`))
-          .catch((error) => {
-            console.warn(`[audio] could not play ${key}`, error);
-            if (activeClickAudio === audio) activeClickAudio = null;
-          });
-      }
+      promise?.catch?.((error) => {
+        console.warn("[audio] could not play " + key, error);
+        if (activeClickAudio === audio) activeClickAudio = null;
+      });
     } catch (error) {
-      console.warn(`[audio] failed to start ${key}`, error);
+      console.warn("[audio] failed to start " + key, error);
       if (activeClickAudio === audio) activeClickAudio = null;
     }
   }
 
+  function startAmbientLoop(key, volume = 0.78) {
+    const audio = audioBank[key];
+    if (!audio) return;
+
+    if (ambientAudio && ambientAudio !== audio) {
+      stopAudioElement(ambientAudio);
+    }
+
+    ambientAudio = audio;
+
+    try {
+      audio.loop = true;
+      audio.volume = volume;
+      if (Number.isFinite(audio.duration) && audio.duration > 0 && audio.currentTime >= audio.duration - 0.08) {
+        audio.currentTime = 0;
+      }
+
+      const promise = audio.play();
+      promise?.catch?.((error) => {
+        console.warn("[audio] ambient " + key + " blocked/failed", error);
+      });
+    } catch (error) {
+      console.warn("[audio] ambient " + key + " failed", error);
+    }
+  }
+
+  function stopAmbientLoop(key = null) {
+    if (!ambientAudio) return;
+    if (key && ambientAudio !== audioBank[key]) return;
+    stopAudioElement(ambientAudio);
+    ambientAudio = null;
+  }
+
   function startIntroLoop() {
+    if (currentScreen !== "intro") return;
     const audio = audioBank.intro;
-    if (!audio || currentScreen !== "intro") return;
+    if (!audio) return;
 
     try {
       audio.loop = true;
       audio.volume = 0.78;
-      if (audio.currentTime >= audio.duration - 0.1) audio.currentTime = 0;
+      ambientAudio = audio;
+
       const promise = audio.play();
       if (promise?.then) {
         promise
           .then(() => {
             introAutoplaySucceeded = true;
-            console.info("[audio] intro loop started");
+            console.info("[audio] hoa hoa loop started");
           })
           .catch((error) => {
-            // This is a browser autoplay-policy block, not a broken audio file.
             console.warn("[audio] browser blocked unmuted intro autoplay", error);
           });
       }
@@ -153,13 +231,28 @@
   }
 
   function stopIntroLoop() {
+    if (ambientAudio === audioBank.intro) ambientAudio = null;
     stopAudioElement(audioBank.intro);
   }
 
-  // Try immediately and again once the page has fully loaded.
-  // There is deliberately NO "enable audio" overlay/button.
+  function startSoparLoop() {
+    startAmbientLoop("sopar", 0.92);
+  }
+
+  function stopSoparLoop() {
+    stopAmbientLoop("sopar");
+  }
+
+  // Try audible autoplay immediately. If the browser blocks it, retry on the
+  // first real interaction without showing any extra "enable audio" UI.
   document.addEventListener("DOMContentLoaded", startIntroLoop, { once: true });
   window.addEventListener("load", startIntroLoop, { once: true });
+
+  const retryIntroAfterGesture = () => {
+    if (currentScreen === "intro" && !introAutoplaySucceeded) startIntroLoop();
+  };
+  document.addEventListener("pointerdown", retryIntroAfterGesture, { capture: true, passive: true });
+  document.addEventListener("keydown", retryIntroAfterGesture, { capture: true });
 
   // Preload the important GIFs so hover and retry transitions feel immediate.
   function preloadImage(src) {
@@ -230,6 +323,8 @@
     currentScreen = name;
     document.body.dataset.screen = name;
     if (name !== "intro") stopIntroLoop();
+    if (name !== "dates") stopSoparLoop();
+    stopHoverSound();
     syncIntroVideo(name);
     renderMemes(name);
 
@@ -271,13 +366,15 @@
     showScreen("ask");
   });
 
-  // ---------- PAGE 2: ORIGINAL-ZIP HOVER BACKGROUNDS, NO HOVER AUDIO ----------
+  // ---------- PAGE 2: HOVER BACKGROUNDS + YES/NO HOVER AUDIO ----------
   yesBtn.addEventListener("mouseenter", () => {
     if (currentScreen !== "ask") return;
     if (config.ask?.hoverYesBackground) setBackgroundSource(config.ask.hoverYesBackground);
+    playHoverSound("yes", 0.88);
   });
 
   yesBtn.addEventListener("mouseleave", () => {
+    stopHoverSound();
     if (currentScreen === "ask") setBackground("ask");
   });
 
@@ -294,9 +391,11 @@
 
   noBtn.addEventListener("mouseenter", () => {
     showNoReaction(1100);
+    playHoverSound("no", 0.86);
   });
 
   noBtn.addEventListener("mouseleave", () => {
+    stopHoverSound();
     // The timed reaction stays visible briefly even when the button dodges away.
   });
 
@@ -354,6 +453,9 @@
     noAttempts += 1;
     updateNoText();
     showNoReaction(780);
+    // The NO button usually escapes before a literal CSS hover can happen,
+    // so treat a dodge attempt as the hover reaction and play the NO sound immediately.
+    playHoverSound("no", 0.86, { autoStopMs: 700 });
     lastNoMoveAt = performance.now();
 
     // 2) on the very next paint, move away smoothly
@@ -440,8 +542,10 @@
   });
 
   toDatesBtn.addEventListener("click", () => {
-    playSound("sopar", 0.95);
+    stopActiveAudio();
+    stopHoverSound();
     showScreen("dates");
+    startSoparLoop();
     renderDateCard();
   });
 
