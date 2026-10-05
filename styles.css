@@ -547,3 +547,169 @@ body[data-screen="final"] .background-wash { opacity: 0; }
   .retro-title { font-size: clamp(3.2rem, 18vw, 5.6rem); }
   .celebrate-original-title { font-size: clamp(2.6rem, 13vw, 4.7rem); }
 }
+
+
+/* ============================================================
+   V14 DATE PICKER — OCEAN BACKGROUND + ALL CARDS VISIBLE
+   ============================================================ */
+
+.dates-ocean-bg {
+  display: none;
+  position: fixed;
+  z-index: 0;
+  top: -12vh;
+  left: -12vw;
+  width: 124vw;
+  height: 124vh;
+  border: 0;
+  pointer-events: none;
+  transform: scale(1.18);
+  transform-origin: center;
+  filter: brightness(.64) saturate(.9);
+}
+
+body[data-screen="dates"] .dates-ocean-bg {
+  display: block;
+}
+
+body[data-screen="dates"] .background-wash {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(4,18,34,.24), rgba(4,18,34,.40));
+}
+
+body[data-screen="dates"] .date-page {
+  width: min(1220px, 100%);
+  padding: 48px 18px 72px;
+}
+
+body[data-screen="dates"] .date-header {
+  margin-bottom: 28px;
+}
+
+body[data-screen="dates"] .date-heading,
+body[data-screen="dates"] .date-header .eyebrow,
+body[data-screen="dates"] .date-header .soft-copy {
+  color: #fff;
+  text-shadow: 0 3px 18px rgba(0,0,0,.52);
+}
+
+.date-grid {
+  width: min(1180px, 94vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.date-grid .date-card {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  margin: 0;
+  perspective: 1400px;
+}
+
+.date-grid .date-face {
+  border-radius: 24px;
+  box-shadow: 0 20px 48px rgba(0,0,0,.28);
+}
+
+.date-grid .date-front {
+  padding: 22px;
+}
+
+.date-grid .date-front-center {
+  margin: auto;
+  width: 100%;
+}
+
+.date-grid .date-emoji {
+  font-size: clamp(3rem, 5vw, 4.4rem);
+}
+
+.date-grid .date-front-title {
+  font-size: clamp(2rem, 3.4vw, 3.25rem);
+  line-height: .98;
+  margin-top: 12px;
+}
+
+.date-grid .date-teaser {
+  font-size: .9rem;
+}
+
+.date-grid .tap-label {
+  font-size: .7rem;
+}
+
+.date-grid .date-back {
+  padding: 24px 20px;
+}
+
+.date-grid .date-back h2 {
+  font-size: clamp(1.55rem, 2.5vw, 2.35rem);
+  margin: 12px 0 14px;
+}
+
+.date-grid .date-body {
+  font-size: .88rem;
+  line-height: 1.52;
+}
+
+.date-grid .date-tag {
+  margin: 14px 0 16px;
+  font-size: .72rem;
+}
+
+.date-grid .pick-date-btn {
+  padding: 11px 18px;
+  font-size: .82rem;
+}
+
+/* Old carousel UI is intentionally gone. */
+.deck-wrap,
+.deck-stage,
+.deck-arrow,
+.deck-dots,
+.date-counter,
+.flip-hint,
+.date-number {
+  display: none !important;
+}
+
+@media (max-width: 940px) {
+  .date-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(760px, 92vw);
+  }
+}
+
+@media (max-width: 620px) {
+  body[data-screen="dates"] .date-page {
+    padding: 34px 14px 60px;
+  }
+
+  .date-grid {
+    grid-template-columns: 1fr;
+    width: min(420px, 92vw);
+    gap: 18px;
+  }
+
+  .date-grid .date-card {
+    height: auto;
+    aspect-ratio: 5 / 7;
+  }
+
+  .date-grid .date-back {
+    padding: 22px 18px;
+  }
+
+  .dates-ocean-bg {
+    top: -8vh;
+    left: -45vw;
+    width: 190vw;
+    height: 116vh;
+    transform: scale(1.08);
+  }
+}
