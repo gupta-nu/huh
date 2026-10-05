@@ -81,7 +81,7 @@ const SITE_CONFIG = {
       shortTitle: "Rage Room",
       theme: "rage",
       image: "assets/images/rage-throne.png",
-      body: "We go to a rage room and you can take out all the rage that's fitting in that cutu body of yours. You can beat me up also if you want (#rightwhereiwantobe). Then spicy ramen later and your fav ice cream at Milano.",
+      body: "We go to a rage room and you can take out all the rage that's somehow in you (You can beat me up also if you want )(#rightwhereiwantobe). Then spicy ramen later and your fav ice cream at Milano.",
       tag: "warning: extremely attractive violence"
     },
     {
@@ -99,7 +99,7 @@ const SITE_CONFIG = {
       shortTitle: "Dosa Hunt",
       theme: "dosa",
       image: "assets/images/date-dosa.jpg",
-      body: "We go to Jayanagar and hit ALL your fav dosa spots. You give your expert culinary rating and review, we stop for hot chocolate and some shopping. Plus point: I could hold your hand the entire time because they might steal you.",
+      body: "We go to Jayanagar and hit ALL your fav dosa spots. You give your expert culinary rating and review, we stop for hot chocolate and some shopping.(if the dosa doesn't slap u can slap me) Plus point: I could hold your hand the entire time because they might steal you.",
       tag: "food critic gf mode activated"
     },
     {
@@ -108,7 +108,7 @@ const SITE_CONFIG = {
       shortTitle: "Coffee + Hot Chocolate",
       theme: "coffee",
       image: "assets/images/date-coffee.jpg",
-      body: "Ayy chill da. We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point because I love your voice.",
+      body: "Ayy chill da date(i might be a serial killer so you are playing it safe ahh date). We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point because I love your voice.",
       tag: "maximum yapping encouraged"
     },
     {
@@ -117,7 +117,7 @@ const SITE_CONFIG = {
       shortTitle: "Horror Movie",
       theme: "movie",
       image: "assets/images/date-horror.jpg",
-      body: "WE GO WATCH A HORROR MOVIE. I buy you all the caramel popcorn your small mouth can eat. If I get scared I will need a kissy tho. If no horror movie is showing, any movie works. I still will need a kissy because I'll pretend to get scared.",
+      body: "WE GO WATCH A HORROR MOVIE. I buy you all the caramel popcorn you can eat. If I get scared I will need a kissy tho. If no horror movie is showing, any movie works. I still will need a kissy because I'll pretend to get scared.",
       tag: "totally not a kiss strategy"
     },
     {
@@ -153,7 +153,7 @@ const SITE_CONFIG = {
       shortTitle: "You Plan It",
       theme: "wildcard",
       image: "assets/images/date-wife-choice.jpg",
-      body: "Ayy I want to plan the date. I don't like any of these chungus ahh ideas. I have a much better idea. #wifeisalwaysright #whateveryouwantmaam #imrightwhereiwanttobe",
+      body: "(#wife is always right)(#exactly where i want to be) if your thinking ahh some chungus asss date ideas i wanna go here, i'm happily going to show up at your service, #wifes world and i am just living in it",
       tag: "the correct option by constitutional law"
     }
   ]
