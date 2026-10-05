@@ -719,7 +719,7 @@
     dealMessage.textContent = "";
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/gupta.ananya@protonmail.com", {
+      const response = await fetch("https://formsubmit.co/ajax/ananyagupta8303@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
