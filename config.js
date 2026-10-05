@@ -8,8 +8,7 @@ const SITE_CONFIG = {
   herName: "wife",
 
   ask: {
-    introTitle: "herro wife?",
-      introTitle: "Hibachi, Benihana, Teriyaki",
+    introTitle: "herro wife?  Hibachi, Benihana, Teriyaki",
     introSubtitle: "can i ask u somethin",
     introButton: "sup?",
     question: "can i take you out on a date :>",
