@@ -10,13 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <video id="introVideo" class="intro-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
     <source src="assets/video/cat-page-1.mp4" type="video/mp4" />
   </video>
 
+  <!-- Audio is preloaded in the DOM. Intro is looped; browsers may still block audible autoplay. -->
   <audio id="introAudio" src="assets/sounds/hoa_hoa.mp3" preload="auto" autoplay loop></audio>
   <audio id="noAudio" src="assets/sounds/no.mp3" preload="auto"></audio>
   <audio id="yesAudio" src="assets/sounds/yes.mp3" preload="auto"></audio>
@@ -27,6 +28,7 @@
   <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
 
   <main id="app" class="app-shell">
+    <!-- PAGE 1: CAT VIDEO LANDING -->
     <section id="screenIntro" class="screen screen--active hero-screen" data-screen="intro">
       <div class="hero-content intro-content">
         <h1 class="intro-title" id="introTitle">herro wife?</h1>
@@ -36,9 +38,11 @@
       </div>
     </section>
 
+    <!-- PAGE 2: THE QUESTION -->
     <section id="screenAsk" class="screen hero-screen" data-screen="ask">
       <div class="hero-content question-content">
         <h1 class="question-title" id="questionText">can i take you out on a date :&gt;</h1>
+
         <div class="ask-buttons" id="askButtons">
           <button id="yesBtn" class="btn btn--neutral" type="button">yasssss</button>
           <button id="noBtn" class="btn btn--ghost btn--no" type="button">no</button>
@@ -46,6 +50,7 @@
       </div>
     </section>
 
+    <!-- PAGE 3: EXACT ORIGINAL-ZIP STYLE 'PLIS' BEAT -->
     <section id="screenRetry" class="screen hero-screen" data-screen="retry">
       <div class="hero-content retry-content">
         <h1 class="retro-title">plis</h1>
@@ -55,6 +60,7 @@
       </div>
     </section>
 
+    <!-- PAGE 4: ORIGINAL YES BEAT -->
     <section id="screenCelebrate" class="screen hero-screen" data-screen="celebrate">
       <div class="hero-content celebration-content">
         <h1 class="celebrate-original-title">hell yeahhh babyyyy</h1>
@@ -65,6 +71,7 @@
       </div>
     </section>
 
+    <!-- DATE PICKER -->
     <section id="screenDates" class="screen screen--scroll" data-screen="dates">
       <div class="date-page">
         <header class="date-header">
@@ -75,17 +82,21 @@
 
         <div class="deck-wrap">
           <button id="prevCardBtn" class="deck-arrow" type="button" aria-label="Previous date">←</button>
+
           <div class="deck-stage">
             <div id="dateCounter" class="date-counter">1 / 9</div>
             <div id="dateCardMount" class="date-card-mount"></div>
             <p class="flip-hint">tap the card to flip it</p>
           </div>
+
           <button id="nextCardBtn" class="deck-arrow" type="button" aria-label="Next date">→</button>
         </div>
+
         <div class="deck-dots" id="deckDots" aria-label="Date options"></div>
       </div>
     </section>
 
+    <!-- FINAL -->
     <section id="screenFinal" class="screen screen--scroll" data-screen="final">
       <div class="final-page">
         <div class="glass-panel final-panel">
@@ -114,7 +125,7 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="config.js?v=7"></script>
-  <script src="script.js?v=7"></script>
+  <script src="config.js?v=6"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+Drop optional date-card images/GIFs here.
+Then set the date's `image` property in config.js.
+
+Example:
+image: "assets/images/aquarium.gif"

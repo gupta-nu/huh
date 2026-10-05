@@ -1,0 +1,6 @@
+Drop your GIF / PNG / JPG / WEBP meme files in this folder.
+Then reference them from config.js, for example:
+
+src: "assets/memes/crying-lebron.gif"
+
+See README.md for examples.

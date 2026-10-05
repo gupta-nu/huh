@@ -15,11 +15,12 @@ const SITE_CONFIG = {
     question: "can i take you out on a date :>",
     yesText: "yasssss",
 
-    // Original ZIP hover reactions.
+    // Same hover-background jokes as the first ZIP. No hover audio.
     hoverYesBackground: "https://media1.tenor.com/m/uFkKfNv-8wsAAAAd/vince-carter-emotional-vince-carter.gif",
     hoverNoBackground: "https://media1.tenor.com/m/T2g9DmDlZZEAAAAd/crying-lebron-james.gif"
   },
 
+  // The button changes text as it slowly dodges the cursor.
   noSequence: [
     "no",
     "chungus fool go da",
@@ -31,6 +32,7 @@ const SITE_CONFIG = {
   ],
 
   backgrounds: {
+    // intro is a local MP4 handled separately in script.js
     ask: "https://i.pinimg.com/originals/a3/10/29/a31029140fd97696b96f9f4e5cdfc681.gif",
     retry: "https://media1.tenor.com/m/8A2dktAA-XMAAAAd/interstellar-crying.gif",
     celebrate: "https://media.tenor.com/mtiOW6O-k8YAAAAM/shrek-shrek-rizz.gif",
@@ -38,6 +40,7 @@ const SITE_CONFIG = {
     final: ""
   },
 
+  // These are copied from the first ZIP you shared.
   backgroundSequences: {
     retry: {
       interval: 2000,
@@ -61,9 +64,12 @@ const SITE_CONFIG = {
     }
   },
 
-  memes: [],
+  memes: [
+    // Add the shared brainrot stickers here later.
+  ],
 
   sounds: {
+    // Intro track + click-only choice sounds.
     intro: "assets/sounds/hoa_hoa.mp3",
     no: "assets/sounds/no.mp3",
     yes: "assets/sounds/yes.mp3",
@@ -89,7 +95,7 @@ const SITE_CONFIG = {
       shortTitle: "Aquarium",
       emoji: "🪼",
       theme: "aquarium",
-      image: "",
+      image: "", // add e.g. assets/images/aquarium.gif
       teaser: "certified aquatic flirting",
       body: "We go to an aquarium and see as many fishies and turtles and jellyfishes as you want. Plus factor: we could kiss in front of the fishes to make them jealous. Then some BOMB food later (I am also an option) and I get to hear you yap yap yap.",
       tag: "the fish WILL be jealous",
@@ -115,20 +121,20 @@ const SITE_CONFIG = {
       theme: "coffee",
       image: "",
       teaser: "simple date date",
-      body: "Ayy chill da. We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point because I love your voice.",
-      tag: "maximum yapping encouraged",
+      body: "Ayy chill da, simple date date. We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point: I love your voice.",
+      tag: "yapping strongly encouraged",
       sound: ""
     },
     {
-      id: "horror",
-      title: "HORROR MOVIE DATE",
+      id: "movie",
+      title: "SCARED? ME? NEVER.",
       shortTitle: "Horror Movie",
       emoji: "🍿",
-      theme: "horror",
+      theme: "movie",
       image: "",
-      teaser: "definitely not a kiss strategy",
-      body: "WE GO WATCH A HORROR MOVIE. I buy u all the caramel popcorn your small mouth can eat. If I get scared I will need a kissy tho. If no horror movie is showing, any movie works. I still will need a kissy because I'll pretend to get scared.",
-      tag: "scared? me? never.",
+      teaser: "totally not a kiss strategy",
+      body: "WE GO WATCH A HORROR MOVIE. I buy you all the caramel popcorn your small mouth can eat. If I get scared I will need a kissy tho. If no horror movie is showing, any movie works. I still will need a kissy because I'll pretend to get scared.",
+      tag: "cinematic manipulation (romantic edition)",
       sound: ""
     },
     {
@@ -139,20 +145,20 @@ const SITE_CONFIG = {
       theme: "museum",
       image: "",
       teaser: "intellectual fraud but romantic",
-      body: "We go to a museum — the Toyota experience one in Phoenix or the music one near us — and u can cook up fake meanings of everything we see and I 100% believe you. I steal one art piece as I leave (you), lunch (imma cover myself with chili powder) and something sweet for my someone sweet.",
-      tag: "do not touch the exhibits (except me apparently)",
+      body: "We go to a museum — the Toyota experience one in Phoenix or the music one near us — and you can cook up fake meanings of everything we see and I 100% believe you. I steal one art piece as I leave (you), lunch (imma cover myself with chili powder), and something sweet for my someone sweet.",
+      tag: "please do not touch the exhibits (except me)",
       sound: ""
     },
     {
       id: "maya-bazaar",
-      title: "MAYA BAZAAR DATE",
+      title: "MAYA BAZAAR SIDE QUEST",
       shortTitle: "Maya Bazaar",
       emoji: "🛍️",
       theme: "bazaar",
       image: "",
       teaser: "shopping + eating + yapping",
-      body: "We go to Maya Bazaar and go shopping, eating and yapping. Plus point I get to hold your hand because I don't want you to get lost in the crowd.",
-      tag: "crowd control boyfriend services",
+      body: "We go to Maya Bazaar and go shopping, eating and yapping. Plus point: I get to hold your hand because I don't want you to get lost in the crowd.",
+      tag: "crowd-control boyfriend services included",
       sound: ""
     },
     {
@@ -163,23 +169,21 @@ const SITE_CONFIG = {
       theme: "arcade",
       image: "",
       teaser: "romance but ranked mode",
-      body: "We go to an arcade / Dave & Buster's and you beat me in every game we play. I won't let you win, I'm very competitive. Loser gets kisses hehe. Then pizza and some mad new dessert place we try.",
-      tag: "game over = kiss tax",
+      body: "We go to an arcade / Dave & Buster's and you beat me in every game we play (I won't let you win, I'm very competitive). Loser gets kisses hehe. Then pizza and some mad new dessert place we try.",
+      tag: "loser gets kisses. winner also somehow gets kisses.",
       sound: ""
     },
     {
-      id: "your-choice",
+      id: "her-choice",
       title: "WIFE'S CHOICE",
       shortTitle: "You Plan It",
       emoji: "👑",
       theme: "wildcard",
       image: "",
       teaser: "user override accepted",
-      body: "Ayy I want to plan the date, I don't like any of these chungus ahh ideas. I have a much better idea. #wifeisalwaysright #whateveryouwantmaam #imrightwhereiwanttobe",
-      tag: "the correct option",
+      body: "Ayy I want to plan the date. I don't like any of these chungus ahh ideas. I have a much better idea. #wifeisalwaysright #whateveryouwantmaam #imrightwhereiwanttobe",
+      tag: "the correct option by constitutional law",
       sound: ""
     }
   ]
 };
-
-window.SITE_CONFIG = SITE_CONFIG;
