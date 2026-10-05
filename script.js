@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v8");
+  console.info("date-site build: v9");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -75,6 +75,7 @@
   const audioBank = {
     intro: document.getElementById("introAudio"),
     no: document.getElementById("noAudio"),
+    noHover: document.getElementById("noHoverAudio"),
     yes: document.getElementById("yesAudio"),
     sopar: document.getElementById("soparAudio")
   };
@@ -391,7 +392,7 @@
 
   noBtn.addEventListener("mouseenter", () => {
     showNoReaction(1100);
-    playHoverSound("no", 0.86);
+    playHoverSound("noHover", 0.86);
   });
 
   noBtn.addEventListener("mouseleave", () => {
@@ -455,7 +456,7 @@
     showNoReaction(780);
     // The NO button usually escapes before a literal CSS hover can happen,
     // so treat a dodge attempt as the hover reaction and play the NO sound immediately.
-    playHoverSound("no", 0.86, { autoStopMs: 700 });
+    playHoverSound("noHover", 0.86, { autoStopMs: 700 });
     lastNoMoveAt = performance.now();
 
     // 2) on the very next paint, move away smoothly
