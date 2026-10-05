@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v13");
+  console.info("date-site build: v14");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -29,11 +29,7 @@
   const retryBtn = document.getElementById("retryBtn");
   const toDatesBtn = document.getElementById("toDatesBtn");
 
-  const prevCardBtn = document.getElementById("prevCardBtn");
-  const nextCardBtn = document.getElementById("nextCardBtn");
-  const dateCardMount = document.getElementById("dateCardMount");
-  const dateCounter = document.getElementById("dateCounter");
-  const deckDots = document.getElementById("deckDots");
+  const dateGrid = document.getElementById("dateGrid");
 
   const selectedDateTitle = document.getElementById("selectedDateTitle");
   const selectedDateBlurb = document.getElementById("selectedDateBlurb");
@@ -53,7 +49,6 @@
   let lastNoMoveAt = 0;
   const MAX_NO_DODGES = Math.max(0, (config.noSequence?.length || 1) - 1);
 
-  let currentCardIndex = 0;
   let selectedDate = null;
 
   // ---------- COPY ----------
@@ -591,98 +586,71 @@
   toDatesBtn.addEventListener("click", () => {
     stopHoverSound();
     showScreen("dates");
-    renderDateCard();
+    renderDateGrid();
   });
 
-  // ---------- DATE DECK ----------
-  function renderDots() {
-    deckDots.innerHTML = "";
-    config.dates.forEach((date, index) => {
-      const dot = document.createElement("button");
-      dot.className = `deck-dot${index === currentCardIndex ? " is-active" : ""}`;
-      dot.type = "button";
-      dot.setAttribute("aria-label", `Show ${date.shortTitle}`);
-      dot.addEventListener("click", () => {
-        currentCardIndex = index;
-        renderDateCard();
-      });
-      deckDots.appendChild(dot);
-    });
-  }
+  // ---------- DATE GRID ----------
+  function renderDateGrid() {
+    if (!dateGrid) return;
 
-  function renderDateCard() {
-    const date = config.dates[currentCardIndex];
-    dateCounter.textContent = `${currentCardIndex + 1} / ${config.dates.length}`;
+    dateGrid.innerHTML = "";
 
-    const card = document.createElement("article");
-    card.className = "date-card";
-    card.setAttribute("tabindex", "0");
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", `${date.shortTitle}. Tap to flip card.`);
+    config.dates.forEach((date) => {
+      const card = document.createElement("article");
+      card.className = "date-card";
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", date.shortTitle + ". Tap to flip card.");
 
-    const front = document.createElement("div");
-    front.className = `date-face date-front theme-${date.theme}${date.image ? " has-image" : ""}`;
-    if (date.image) front.style.backgroundImage = `url("${date.image.replaceAll('"', '\\"')}")`;
+      const front = document.createElement("div");
+      front.className = `date-face date-front theme-${date.theme}${date.image ? " has-image" : ""}`;
 
-    front.innerHTML = `
-      <div class="date-number">date option ${String(currentCardIndex + 1).padStart(2, "0")}</div>
-      <div class="date-front-center">
-        <div class="date-emoji">${escapeHtml(date.emoji)}</div>
-        <h2 class="date-front-title">${escapeHtml(date.shortTitle)}</h2>
-        <p class="date-teaser">${escapeHtml(date.teaser)}</p>
-      </div>
-      <div class="tap-label">tap to reveal ♡</div>
-    `;
-
-    const back = document.createElement("div");
-    back.className = "date-face date-back";
-    back.innerHTML = `
-      <div class="back-emoji">${escapeHtml(date.emoji)}</div>
-      <h2>${escapeHtml(date.title)}</h2>
-      <p class="date-body">${escapeHtml(date.body)}</p>
-      <div class="date-tag">${escapeHtml(date.tag)}</div>
-      <button class="btn btn--yes pick-date-btn" type="button">PICK THIS ONE ♡</button>
-    `;
-
-    card.append(front, back);
-    dateCardMount.innerHTML = "";
-    dateCardMount.appendChild(card);
-
-    const flip = () => card.classList.toggle("is-flipped");
-
-    card.addEventListener("click", (event) => {
-      if (event.target.closest(".pick-date-btn")) return;
-      flip();
-    });
-
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        flip();
+      if (date.image) {
+        front.style.backgroundImage = `url("${date.image.replaceAll('"', '\\"')}")`;
       }
+
+      front.innerHTML = `
+        <div class="date-front-center">
+          <div class="date-emoji">${escapeHtml(date.emoji)}</div>
+          <h2 class="date-front-title">${escapeHtml(date.shortTitle)}</h2>
+          <p class="date-teaser">${escapeHtml(date.teaser)}</p>
+        </div>
+        <div class="tap-label">tap to reveal ♡</div>
+      `;
+
+      const back = document.createElement("div");
+      back.className = "date-face date-back";
+      back.innerHTML = `
+        <div class="back-emoji">${escapeHtml(date.emoji)}</div>
+        <h2>${escapeHtml(date.title)}</h2>
+        <p class="date-body">${escapeHtml(date.body)}</p>
+        <div class="date-tag">${escapeHtml(date.tag)}</div>
+        <button class="btn btn--yes pick-date-btn" type="button">PICK THIS ONE ♡</button>
+      `;
+
+      card.append(front, back);
+      dateGrid.appendChild(card);
+
+      const flip = () => card.classList.toggle("is-flipped");
+
+      card.addEventListener("click", (event) => {
+        if (event.target.closest(".pick-date-btn")) return;
+        flip();
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          flip();
+        }
+      });
+
+      back.querySelector(".pick-date-btn").addEventListener("click", (event) => {
+        event.stopPropagation();
+        selectDate(date, card);
+      });
     });
-
-    back.querySelector(".pick-date-btn").addEventListener("click", (event) => {
-      event.stopPropagation();
-      selectDate(date, card);
-    });
-
-    renderDots();
   }
-
-  function nextCard(delta) {
-    currentCardIndex = (currentCardIndex + delta + config.dates.length) % config.dates.length;
-    renderDateCard();
-  }
-
-  prevCardBtn.addEventListener("click", () => nextCard(-1));
-  nextCardBtn.addEventListener("click", () => nextCard(1));
-
-  document.addEventListener("keydown", (event) => {
-    if (currentScreen !== "dates") return;
-    if (event.key === "ArrowLeft") nextCard(-1);
-    if (event.key === "ArrowRight") nextCard(1);
-  });
 
   function selectDate(date, card) {
     selectedDate = date;
