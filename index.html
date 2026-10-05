@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=18" />
+  <link rel="stylesheet" href="styles.css?v=19" />
 </head>
 <body>
   <video id="introVideo" class="intro-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
@@ -136,7 +136,25 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="config.js?v=18"></script>
-  <script src="script.js?v=18"></script>
+  <!-- Hidden plain HTML form: more reliable than AJAX for FormSubmit activation/delivery. -->
+  <iframe id="dateNotifyFrame" name="dateNotifyFrame" hidden title=""></iframe>
+  <form
+    id="dateNotifyForm"
+    action="https://formsubmit.co/ananyagupta8303@gmail.com"
+    method="POST"
+    target="dateNotifyFrame"
+    hidden
+  >
+    <input type="hidden" name="_subject" value="date confirmed <3" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_url" value="https://gupta-nu.github.io/tt/" />
+    <input id="notifySelectedDate" type="hidden" name="selected_date" value="" />
+    <input id="notifyDayTime" type="hidden" name="day_and_time" value="" />
+    <input id="notifyMessage" type="hidden" name="message" value="" />
+  </form>
+
+  <script src="config.js?v=19"></script>
+  <script src="script.js?v=19"></script>
 </body>
 </html>
