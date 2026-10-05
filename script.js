@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v9");
+  console.info("date-site build: v10");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -206,7 +206,7 @@
   }
 
   function startIntroLoop() {
-    if (currentScreen !== "intro") return;
+    if (!["intro", "ask", "retry", "celebrate"].includes(currentScreen)) return;
     const audio = audioBank.intro;
     if (!audio) return;
 
@@ -323,7 +323,12 @@
 
     currentScreen = name;
     document.body.dataset.screen = name;
-    if (name !== "intro") stopIntroLoop();
+    const hoaScreens = new Set(["intro", "ask", "retry", "celebrate"]);
+    if (hoaScreens.has(name)) {
+      startIntroLoop();
+    } else {
+      stopIntroLoop();
+    }
     if (name !== "dates") stopSoparLoop();
     stopHoverSound();
     syncIntroVideo(name);
