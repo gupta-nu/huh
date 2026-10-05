@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v17");
+  console.info("date-site build: v19");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -36,6 +36,10 @@
   const availabilityInput = document.getElementById("availabilityInput");
   const dealBtn = document.getElementById("dealBtn");
   const dealMessage = document.getElementById("dealMessage");
+  const dateNotifyForm = document.getElementById("dateNotifyForm");
+  const notifySelectedDate = document.getElementById("notifySelectedDate");
+  const notifyDayTime = document.getElementById("notifyDayTime");
+  const notifyMessage = document.getElementById("notifyMessage");
   const toast = document.getElementById("toast");
 
   let currentScreen = "intro";
@@ -52,7 +56,7 @@
   let selectedDate = null;
 
   // ---------- COPY ----------
-  document.title = `one important question for ${config.herName || "you"} ♡`;
+  document.title = "huh";
   introTitle.textContent = config.ask?.introTitle || "herro wife?";
   introInsideJoke.textContent = config.ask?.introInsideJoke || "“Hibachi, Benihana, Teriyaki”";
   introSubtitle.textContent = config.ask?.introSubtitle || "can i ask u somethin";
@@ -701,7 +705,7 @@
   }
 
   // ---------- FINAL ----------
-  dealBtn.addEventListener("click", async () => {
+  dealBtn.addEventListener("click", () => {
     if (!selectedDate) {
       dealMessage.textContent = "pick a date first <3";
       return;
@@ -714,36 +718,35 @@
       return;
     }
 
+    if (!dateNotifyForm || !notifySelectedDate || !notifyDayTime || !notifyMessage) {
+      dealMessage.textContent = "couldn't send :( refresh and try once";
+      return;
+    }
+
+    notifySelectedDate.value = selectedDate.shortTitle;
+    notifyDayTime.value = availability;
+    notifyMessage.value =
+      "She picked " + selectedDate.shortTitle +
+      " and said she is free: " + availability;
+
     dealBtn.disabled = true;
     dealBtn.textContent = "sending...";
     dealMessage.textContent = "";
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/ananyagupta8303@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          _subject: "date confirmed <3",
-          _template: "table",
-          selected_date: selectedDate.shortTitle,
-          day_and_time: availability,
-          message: "She picked " + selectedDate.shortTitle + " and said she is free: " + availability
-        })
-      });
+      dateNotifyForm.submit();
 
-      if (!response.ok) {
-        throw new Error("FormSubmit returned " + response.status);
-      }
-
-      dealBtn.textContent = "confirmed <3";
-      dealMessage.textContent = "sent hehe. date acquired <3";
-      launchConfetti(95);
-      showToast(selectedDate.shortTitle + " confirmed <3");
+      // The submission happens in a hidden iframe so she stays on the cute page.
+      // On first use FormSubmit sends YOU an activation email; after activation,
+      // future submissions are forwarded normally.
+      setTimeout(() => {
+        dealBtn.textContent = "confirmed <3";
+        dealMessage.textContent = "sent hehe. date acquired <3";
+        launchConfetti(95);
+        showToast(selectedDate.shortTitle + " confirmed <3");
+      }, 700);
     } catch (error) {
-      console.error("[date confirmation] email send failed", error);
+      console.error("[date confirmation] form send failed", error);
       dealBtn.disabled = false;
       dealBtn.textContent = "confirm";
       dealMessage.textContent = "couldn't send :( try again once";
