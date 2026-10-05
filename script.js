@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v16");
+  console.info("date-site build: v17");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -32,8 +32,8 @@
   const dateGrid = document.getElementById("dateGrid");
 
   const selectedDateTitle = document.getElementById("selectedDateTitle");
-  const selectedDateBlurb = document.getElementById("selectedDateBlurb");
   const ticketDate = document.getElementById("ticketDate");
+  const availabilityInput = document.getElementById("availabilityInput");
   const dealBtn = document.getElementById("dealBtn");
   const dealMessage = document.getElementById("dealMessage");
   const toast = document.getElementById("toast");
@@ -688,20 +688,66 @@
 
     setTimeout(() => {
       selectedDateTitle.textContent = date.shortTitle;
-      selectedDateBlurb.textContent = date.tag;
       ticketDate.textContent = date.shortTitle;
+      if (availabilityInput) availabilityInput.value = "";
+      if (dealMessage) dealMessage.textContent = "";
+      if (dealBtn) {
+        dealBtn.disabled = false;
+        dealBtn.textContent = "confirm";
+      }
       showScreen("final");
       launchConfetti(70);
     }, 850);
   }
 
   // ---------- FINAL ----------
-  dealBtn.addEventListener("click", () => {
-    dealMessage.textContent = "hehe. see you then, pretty girl ♡";
-    dealBtn.textContent = "DATE LOCKED ♡";
+  dealBtn.addEventListener("click", async () => {
+    if (!selectedDate) {
+      dealMessage.textContent = "pick a date first <3";
+      return;
+    }
+
+    const availability = availabilityInput?.value.trim() || "";
+    if (!availability) {
+      dealMessage.textContent = "tell me what day + time you're free hehe";
+      availabilityInput?.focus();
+      return;
+    }
+
     dealBtn.disabled = true;
-    launchConfetti(95);
-    showToast(selectedDate ? `${selectedDate.shortTitle} locked in ♡` : "date locked in ♡");
+    dealBtn.textContent = "sending...";
+    dealMessage.textContent = "";
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/gupta.ananya@protonmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: "date confirmed <3",
+          _template: "table",
+          selected_date: selectedDate.shortTitle,
+          day_and_time: availability,
+          message: "She picked " + selectedDate.shortTitle + " and said she is free: " + availability
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("FormSubmit returned " + response.status);
+      }
+
+      dealBtn.textContent = "confirmed <3";
+      dealMessage.textContent = "sent hehe. date acquired <3";
+      launchConfetti(95);
+      showToast(selectedDate.shortTitle + " confirmed <3");
+    } catch (error) {
+      console.error("[date confirmation] email send failed", error);
+      dealBtn.disabled = false;
+      dealBtn.textContent = "confirm";
+      dealMessage.textContent = "couldn't send :( try again once";
+    }
   });
 
   // ---------- EFFECTS ----------
