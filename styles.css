@@ -713,3 +713,9 @@ body[data-screen="dates"] .date-header .soft-copy {
     transform: scale(1.08);
   }
 }
+
+
+/* Hide duplicate Hibachi line on intro */
+.intro-inside-joke {
+  display: none !important;
+}
