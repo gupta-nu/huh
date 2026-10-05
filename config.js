@@ -79,109 +79,82 @@ const SITE_CONFIG = {
       id: "rage-room",
       title: "DESTROY THINGS, MY QUEEN",
       shortTitle: "Rage Room",
-      emoji: "🔥",
       theme: "rage",
       image: "assets/images/rage-throne.png",
-      teaser: "final boss date option",
       body: "We go to a rage room and you can take out all the rage that's fitting in that cutu body of yours. You can beat me up also if you want (#rightwhereiwantobe). Then spicy ramen later and your fav ice cream at Milano.",
-      tag: "warning: extremely attractive violence",
-      sound: ""
+      tag: "warning: extremely attractive violence"
     },
     {
       id: "aquarium",
       title: "FISHIES, JELLYFISHIES & ME",
       shortTitle: "Aquarium",
-      emoji: "🪼",
       theme: "aquarium",
-      image: "", // add e.g. assets/images/aquarium.gif
-      teaser: "certified aquatic flirting",
-      body: "We go to an aquarium and see as many fishies and turtles and jellyfishes as you want. Plus factor: we could kiss in front of the fishes to make them jealous. Then some BOMB food later (I am also an option) and I get to hear you yap yap yap.",
-      tag: "the fish WILL be jealous",
-      sound: ""
+      image: "assets/images/date-aquarium.jpg",
+      body: "We go to an aquarium and see as many fishies and turtles and jellyfishes as you want. Plus factor: we could kiss in front of the fishes to make them jealous. Then some BOMB food later and I get to hear you yap yap yap.",
+      tag: "the fish WILL be jealous"
     },
     {
       id: "dosa-hunt",
       title: "OPERATION: CRISPY DOSA",
       shortTitle: "Dosa Hunt",
-      emoji: "🥞",
       theme: "dosa",
-      image: "",
-      teaser: "jayanagar side quest",
-      body: "We go to Jayanagar and hit ALL your fav dosa spots. You give your expert culinary rating and review, we stop for hot chocolate for you and some shopping. Plus point: I could hold your hand the entire time because I've heard there's a lot of crime in Jayanagar and they might steal you.",
-      tag: "food critic gf mode activated",
-      sound: ""
+      image: "assets/images/date-dosa.jpg",
+      body: "We go to Jayanagar and hit ALL your fav dosa spots. You give your expert culinary rating and review, we stop for hot chocolate and some shopping. Plus point: I could hold your hand the entire time because they might steal you.",
+      tag: "food critic gf mode activated"
     },
     {
       id: "coffee",
       title: "AYY CHILL DA",
       shortTitle: "Coffee + Hot Chocolate",
-      emoji: "☕",
       theme: "coffee",
-      image: "",
-      teaser: "simple date date",
-      body: "Ayy chill da, simple date date. We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point: I love your voice.",
-      tag: "yapping strongly encouraged",
-      sound: ""
+      image: "assets/images/date-coffee.jpg",
+      body: "Ayy chill da. We grab coffee and hot chocolate wherever you want, and I get to listen to you yap. Plus point because I love your voice.",
+      tag: "maximum yapping encouraged"
     },
     {
       id: "movie",
       title: "SCARED? ME? NEVER.",
       shortTitle: "Horror Movie",
-      emoji: "🍿",
       theme: "movie",
-      image: "",
-      teaser: "totally not a kiss strategy",
+      image: "assets/images/date-horror.jpg",
       body: "WE GO WATCH A HORROR MOVIE. I buy you all the caramel popcorn your small mouth can eat. If I get scared I will need a kissy tho. If no horror movie is showing, any movie works. I still will need a kissy because I'll pretend to get scared.",
-      tag: "cinematic manipulation (romantic edition)",
-      sound: ""
+      tag: "totally not a kiss strategy"
     },
     {
       id: "museum",
       title: "CULTURE BUT MAKE IT DUMB",
       shortTitle: "Museum",
-      emoji: "🖼️",
       theme: "museum",
-      image: "",
-      teaser: "intellectual fraud but romantic",
-      body: "We go to a museum — the Toyota experience one in Phoenix or the music one near us — and you can cook up fake meanings of everything we see and I 100% believe you. I steal one art piece as I leave (you), lunch (imma cover myself with chili powder), and something sweet for my someone sweet.",
-      tag: "please do not touch the exhibits (except me)",
-      sound: ""
+      image: "assets/images/date-museum.jpg",
+      body: "We go to a museum and you can cook up fake meanings of everything we see and I 100% believe you. I steal one art piece as I leave (you), then lunch and something sweet.",
+      tag: "intellectual fraud but romantic"
     },
     {
       id: "maya-bazaar",
       title: "MAYA BAZAAR SIDE QUEST",
       shortTitle: "Maya Bazaar",
-      emoji: "🛍️",
       theme: "bazaar",
-      image: "",
-      teaser: "shopping + eating + yapping",
+      image: "assets/images/date-maya.jpg",
       body: "We go to Maya Bazaar and go shopping, eating and yapping. Plus point: I get to hold your hand because I don't want you to get lost in the crowd.",
-      tag: "crowd-control boyfriend services included",
-      sound: ""
+      tag: "crowd-control boyfriend services included"
     },
     {
       id: "arcade",
       title: "PLAYER 1 VS PLAYER 2",
       shortTitle: "Arcade",
-      emoji: "🕹️",
       theme: "arcade",
-      image: "",
-      teaser: "romance but ranked mode",
-      body: "We go to an arcade / Dave & Buster's and you beat me in every game we play (I won't let you win, I'm very competitive). Loser gets kisses hehe. Then pizza and some mad new dessert place we try.",
-      tag: "loser gets kisses. winner also somehow gets kisses.",
-      sound: ""
+      image: "assets/images/date-arcade.jpg",
+      body: "We go to an arcade and you beat me in every game we play. I won't let you win though, I'm very competitive. Loser gets kisses hehe. Then pizza and some mad new dessert place.",
+      tag: "loser gets kisses. winner somehow also gets kisses."
     },
     {
       id: "her-choice",
       title: "WIFE'S CHOICE",
       shortTitle: "You Plan It",
-      emoji: "👑",
       theme: "wildcard",
-      image: "",
-      teaser: "user override accepted",
+      image: "assets/images/date-wife-choice.jpg",
       body: "Ayy I want to plan the date. I don't like any of these chungus ahh ideas. I have a much better idea. #wifeisalwaysright #whateveryouwantmaam #imrightwhereiwanttobe",
-      tag: "the correct option by constitutional law",
-      sound: ""
+      tag: "the correct option by constitutional law"
     }
   ]
 };

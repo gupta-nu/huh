@@ -719,3 +719,164 @@ body[data-screen="dates"] .date-header .soft-copy {
 .intro-inside-joke {
   display: none !important;
 }
+
+
+/* V16 SIMPLE IMAGE DATE CARDS */
+
+body[data-screen="dates"] .date-header .eyebrow {
+  display: none !important;
+}
+
+body[data-screen="dates"] .date-header .soft-copy {
+  color: #fff;
+  max-width: 720px;
+  margin-top: 12px;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 600;
+  text-shadow: 0 3px 18px rgba(0,0,0,.55);
+}
+
+.date-grid {
+  width: min(1180px, 94vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.date-grid .date-card {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 5 / 7;
+  margin: 0;
+  cursor: pointer;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.date-grid .date-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 20px 48px rgba(0,0,0,.28);
+}
+
+.date-grid .date-front {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.date-grid .date-front::before {
+  display: none !important;
+}
+
+.date-heart {
+  color: #fff;
+  font-family: "Space Mono", monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0,0,0,.55);
+}
+
+.date-grid .date-front-center {
+  width: 100%;
+  margin: auto 0;
+  text-align: center;
+}
+
+.date-grid .date-front-title {
+  color: #fff;
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: .98;
+  text-shadow: 0 5px 18px rgba(0,0,0,.65);
+}
+
+.date-grid .tap-label {
+  text-align: center;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,.7);
+}
+
+.date-grid .date-back {
+  transform: rotateY(180deg);
+  padding: 26px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent !important;
+  color: #fff;
+}
+
+.date-back-content {
+  width: 100%;
+  text-align: center;
+}
+
+.date-back-copy {
+  margin: 0 auto 24px;
+  max-width: 92%;
+
+  color: #fff;
+  font-size: clamp(.95rem, 1.7vw, 1.08rem);
+  line-height: 1.55;
+  font-weight: 800;
+
+  text-shadow: 0 3px 14px rgba(0,0,0,.85);
+}
+
+.date-grid .pick-date-btn {
+  margin: 0 auto;
+  padding: 12px 20px;
+  font-weight: 800;
+}
+
+/* No emoji, teaser, tags or old carousel clutter */
+.date-emoji,
+.back-emoji,
+.date-teaser,
+.date-tag,
+.date-number,
+.date-counter,
+.deck-arrow,
+.deck-dots,
+.flip-hint,
+.deck-wrap,
+.deck-stage {
+  display: none !important;
+}
+
+@media (max-width: 940px) {
+  .date-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(760px, 92vw);
+  }
+}
+
+@media (max-width: 620px) {
+  .date-grid {
+    grid-template-columns: 1fr;
+    width: min(420px, 92vw);
+    gap: 18px;
+  }
+}

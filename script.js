@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  console.info("date-site build: v14");
+  console.info("date-site build: v16");
 
   const config = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : {};
 
@@ -600,38 +600,62 @@
       card.className = "date-card";
       card.setAttribute("tabindex", "0");
       card.setAttribute("role", "button");
-      card.setAttribute("aria-label", date.shortTitle + ". Tap to flip card.");
+      card.setAttribute(
+        "aria-label",
+        date.shortTitle + ". Tap to flip card."
+      );
 
       const front = document.createElement("div");
-      front.className = `date-face date-front theme-${date.theme}${date.image ? " has-image" : ""}`;
+      front.className = "date-face date-front";
 
-      if (date.image) {
-        front.style.backgroundImage = `url("${date.image.replaceAll('"', '\\"')}")`;
-      }
+      front.style.backgroundImage =
+        'linear-gradient(rgba(0,0,0,.14), rgba(0,0,0,.42)), url("' +
+        date.image +
+        '")';
 
       front.innerHTML = `
+        <div class="date-heart">&lt;3</div>
+
         <div class="date-front-center">
-          <div class="date-emoji">${escapeHtml(date.emoji)}</div>
-          <h2 class="date-front-title">${escapeHtml(date.shortTitle)}</h2>
-          <p class="date-teaser">${escapeHtml(date.teaser)}</p>
+          <h2 class="date-front-title">
+            ${escapeHtml(date.shortTitle)}
+          </h2>
         </div>
-        <div class="tap-label">tap to reveal ♡</div>
+
+        <div class="tap-label">
+          tap to reveal
+        </div>
       `;
 
       const back = document.createElement("div");
       back.className = "date-face date-back";
+
+      back.style.backgroundImage =
+        'linear-gradient(rgba(0,0,0,.58), rgba(0,0,0,.72)), url("' +
+        date.image +
+        '")';
+
       back.innerHTML = `
-        <div class="back-emoji">${escapeHtml(date.emoji)}</div>
-        <h2>${escapeHtml(date.title)}</h2>
-        <p class="date-body">${escapeHtml(date.body)}</p>
-        <div class="date-tag">${escapeHtml(date.tag)}</div>
-        <button class="btn btn--yes pick-date-btn" type="button">PICK THIS ONE ♡</button>
+        <div class="date-back-content">
+          <p class="date-back-copy">
+            ${escapeHtml(date.body)}
+          </p>
+
+          <button
+            class="btn btn--yes pick-date-btn"
+            type="button"
+          >
+            pick this one ♡
+          </button>
+        </div>
       `;
 
       card.append(front, back);
       dateGrid.appendChild(card);
 
-      const flip = () => card.classList.toggle("is-flipped");
+      const flip = () => {
+        card.classList.toggle("is-flipped");
+      };
 
       card.addEventListener("click", (event) => {
         if (event.target.closest(".pick-date-btn")) return;
@@ -645,10 +669,12 @@
         }
       });
 
-      back.querySelector(".pick-date-btn").addEventListener("click", (event) => {
-        event.stopPropagation();
-        selectDate(date, card);
-      });
+      back
+        .querySelector(".pick-date-btn")
+        .addEventListener("click", (event) => {
+          event.stopPropagation();
+          selectDate(date, card);
+        });
     });
   }
 
@@ -661,7 +687,7 @@
     card.appendChild(stamp);
 
     setTimeout(() => {
-      selectedDateTitle.textContent = `${date.emoji} ${date.shortTitle}`;
+      selectedDateTitle.textContent = date.shortTitle;
       selectedDateBlurb.textContent = date.tag;
       ticketDate.textContent = date.shortTitle;
       showScreen("final");
